@@ -3,7 +3,6 @@
 
 
 
-from os import name
 
 
 class Dog:
@@ -73,7 +72,7 @@ class Rectangle(Shape):
     def area(self):
         return self.length * self.width
 my_box = Rectangle(40, 20)
-print(my_box.area())
+# print(my_box.area())
 
 
 
@@ -109,4 +108,20 @@ class Person:
         name = string.split(",")[0]
         return cls(name)
 p1 = Person.from_string("Alice, 23")
-print(p1.name)
+# print(p1.name)
+
+
+# CLASS ATTRIBUTES TOGETHER WITH CLASS METHODS
+class Book:
+    total_books = 0
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        Book.total_books +=1 # if you want to keep track of data once updated like keeping count, its best to use the += 1 in the init since ince it is initialized you get to note the increment
+    @classmethod
+    def get_total_books(cls):
+        return cls.total_books
+my_book1 = Book("Harry Potter", "J.K Rowling")
+my_book2 = Book("The Hobbit", "J.R.R. Tolkien")
+my_book3 = Book("1984", "George Orwell")
+print(Book.get_total_books())
