@@ -125,3 +125,72 @@ my_book1 = Book("Harry Potter", "J.K Rowling")
 my_book2 = Book("The Hobbit", "J.R.R. Tolkien")
 my_book3 = Book("1984", "George Orwell")
 print(Book.get_total_books())
+
+#MANY TO MANY RELATIONSHIP
+# --> This is a relationship where multiple objects of on class can be associated with many objects of another class
+
+class Course:
+    def __init__(self, name):
+        self.name = name
+        self.students = []
+    def enroll_student(self, student):
+        if student not in self.students:
+            self.students.append(student)
+            student.enroll_course(self)
+    def list_students(self):
+        return [student.name for student in self.students]
+    def __str__(self):
+        return self.name
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.courses = []
+    def enroll_course(self, course):
+        if course not in self.courses:
+            self.courses.append(course)
+    def list_courses(self):
+        return [str(course) for course in self.courses]
+
+student1 = Student("Klein")
+student2 = Student("Peter")
+course1 = Course("Algebra")
+course2 = Course("Python")
+
+course1.enroll_student(student1)
+course1.enroll_student(student2)
+course2.enroll_student(student2)
+print(course1.list_students())
+print(course2.list_students())
+print(student2.list_courses())
+
+class Book:
+    def __init__(self, title):
+        self.name = title
+        self.book_shelf = []
+    def enroll_book(self, book):
+        if book not in self.book_shelf:
+            self.book_shelf.append(book)
+    def list_books(self):
+        return [book.title for book in self.book_shelf]
+    def __str__(self):
+        return self.book_shelf
+class Author:
+    def __init__(self, name):
+        self.name = name
+        self.author_collection = []
+    def enroll_author(self, author):
+        if author not in self.author_collection:
+            self.author_collection.append(author)
+    def list_authors(self):
+        return [author.name for author in self.author_collection]
+    
+book1 = Book("Harry Potter")
+book2 = Book("The Hobbit")
+author1 = Author("J.K. Rowling")
+author2 = Author("Someone")
+book1.enroll_book(author1)
+book1.enroll_book(author2)
+author1.enroll_author(book1)
+author1.enroll_author(book2)
+print(author1.list_authors())
+print(str(book1.book_shelf))
